@@ -14,8 +14,8 @@ services:
       # POSTGRES_PASSWORD: monica
       # POSTGRES_DB: smart-brain-docker
       # POSTGRES_HOST: postgres
-    links:
-      - postgres
+    # links:
+    #   - postgres
     ports:
       - "3000:3000"
     # volumes: map root folder to work folder, to watch update in the code
