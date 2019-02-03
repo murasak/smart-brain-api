@@ -1,12 +1,37 @@
 version: '3.6'
 
 services:
+  # Backend API
   smart-brain-api: 
     container_name: backend
     # image: node: carbon
     build: ./ 
     command: npm start
     working_dir: /usr/src/smart-brain-api
+    environment:
+      POSTGRES_URI: postgres://monica:monica@postgres:5432/smart-brain-docker
+      # POSTGRES_USER: monica
+      # POSTGRES_PASSWORD: monica
+      # POSTGRES_DB: smart-brain-docker
+      # POSTGRES_HOST: postgres
+    links:
+      - postgres
     ports:
       - "3000:3000"
+    # volumes: map root folder to work folder, to watch update in the code
+    volumes:
+      - ./:/usr/src/smart-brain-api
     
+  # Postgres
+  postgres:
+    environment:
+      POSTGRES_USER: monica
+      POSTGRES_PASSWORD: monica
+      POSTGRES_DB: smart-brain-docker
+      POSTGRES_HOST: postgres
+    container_name: postgres
+    # image: postgres  // if there is a Dockerfile,then use 'build' instead of 'image'
+    build: ./postgres
+    ports:
+      - "5432:5432"
+  
